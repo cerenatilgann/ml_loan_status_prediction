@@ -13,14 +13,18 @@ def predict():
     
     try:
         json = request.get_json()
-        print(json)
+
         df = pd.DataFrame(json, index=[0])
-        print(df)
+
         y_predict = model.predict(df)
-        print(y_predict)
-        result = {"Predicted Loan Satus" : int(y_predict[0])}
-        print(result)
-        print(jsonify(result))
+
+        if y_predict[0] == 0  :
+            pred = "Approved"
+        else:
+            pred = "Rejected"
+            
+        result = {"Predicted Loan Satus" : pred}
+
         return jsonify(result)
 
     except Exception as e:
